@@ -5,7 +5,7 @@ namespace BookStore.BookOperations.DeleteBooks
     public class DeleteBooks
     {
         private readonly BookStoreDbContext _dbContext;
-        private readonly int _id;
+        public readonly int _id;
 
         public DeleteBooks(BookStoreDbContext dbContext, int id)
         {

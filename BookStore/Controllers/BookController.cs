@@ -6,6 +6,7 @@ using BookStore.DBOperations;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 using static BookStore.BookOperations.CreateBook.CreateBooksCommand;
+using static BookStore.BookOperations.GetBooks.GetBookByIdQuery;
 using static BookStore.BookOperations.UpdateBooks.UpdateBooksCommand;
 
 namespace BookStore.Controllers
@@ -30,11 +31,23 @@ namespace BookStore.Controllers
             return Ok(result);
         }
         // Https GetById ----> İd'ye Göre Getirme
+      
         [HttpGet("{id}", Name = "GetBookById")]
         public IActionResult GetById(int id)
         {
-            GetBookByIdQuery query = new GetBookByIdQuery(_context,id);
-            var result = query.Handle();
+            BookViewModelById result;
+
+            try
+            {
+                GetBookByIdQuery query = new GetBookByIdQuery(_context, id);
+                result = query.Handle();
+            }
+            catch (Exception ex )
+            {
+
+                return BadRequest(ex.Message);
+            }
+
             return Ok(result);
         }
 
@@ -51,7 +64,7 @@ namespace BookStore.Controllers
             catch (Exception ex)
             {
 
-               return BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
 
             return Ok();
@@ -61,10 +74,10 @@ namespace BookStore.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateBook(int id, [FromBody] UpdateBookModel updateBook)
         {
-            UpdateBooksCommand command = new UpdateBooksCommand(_context,id);
+            UpdateBooksCommand command = new UpdateBooksCommand(_context, id);
             try
             {
-                command.Model= updateBook;
+                command.Model = updateBook;
                 command.Handle();
             }
             catch (Exception ex)
@@ -74,14 +87,14 @@ namespace BookStore.Controllers
             }
 
             return Ok();
-            
+
 
         }
         // Http Delete ----> Silme
         [HttpDelete("{id}")]
         public IActionResult DeleteBook(int id)
         {
-            DeleteBooks deleteBook = new DeleteBooks(_context,id);
+            DeleteBooks deleteBook = new DeleteBooks(_context, id);
             try
             {
                 deleteBook.Handle();
@@ -89,7 +102,7 @@ namespace BookStore.Controllers
             catch (Exception e)
             {
 
-               return BadRequest(e.Message);
+                return BadRequest(e.Message);
             }
             return Ok();
         }

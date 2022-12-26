@@ -14,25 +14,26 @@ namespace BookStore.BookOperations.GetBooks
             _dbContext = dbContext;
             Id = id;
         }
-        public List<BookViewModel> Handle()
+        public BookViewModelById Handle()
         {
             var book = _dbContext.Books.Where(book => book.Id == Id).Single();
-            List<BookViewModel> vm = new List<BookViewModel>
+            if (book is null)
+                throw new InvalidOperationException("Bu İd' ye Sahip Bir kitap Yok ");
+            BookViewModelById vm = new BookViewModelById
             {
-                new BookViewModel()
-                {
+                
                     Title = book.Title,
                     Genre = ((GenreEnum)book.GenreId).ToString(),
                     PublishDate = book.PublishDate.Date.ToString("dd/MM/yyyy"),
                     PageCount = book.PageCount
-                }
+                
             };
             return vm;
         }
 
 
 
-        public class BookViewModel
+        public class BookViewModelById
         {
             public string Title { get; set; }
             public int PageCount { get; set; }

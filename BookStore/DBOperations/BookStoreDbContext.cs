@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookStore.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace BookStore.DBOperations
@@ -8,16 +9,12 @@ namespace BookStore.DBOperations
         protected readonly IConfiguration Configuration;
         public BookStoreDbContext(DbContextOptions<BookStoreDbContext> options) : base(options)
         { }
-        //public BookStoreDbContext(IConfiguration configuration)
-        //{
-        //    Configuration = configuration;
-        //}
-        //protected override void OnConfiguring(DbContextOptionsBuilder options)
-        //{
-        //    // in memory database used for simplicity, change to a real db for production applications
-        //    options.UseInMemoryDatabase("BookStoreDB");
-        //}
-        public DbSet<Book> Books { get; set; } = null;
+    
+        public DbSet<Book> Books { get; set; } 
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Author> Authors { get; set; }
+       
+
 
     }
 }

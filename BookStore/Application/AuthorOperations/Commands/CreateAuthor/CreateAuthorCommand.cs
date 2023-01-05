@@ -7,10 +7,10 @@ namespace BookStore.Application.AuthorOperations.Commands.CreateAuthor
     public class CreateAuthorCommand
     {
         public CreateAuthorModel Model {get;set;}
-        private readonly BookStoreDbContext _context;
+        private readonly IBookStoreDbContext _context;
         private readonly IMapper _mapper;
 
-        public CreateAuthorCommand(BookStoreDbContext context, IMapper mapper)
+        public CreateAuthorCommand(IBookStoreDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -39,14 +39,7 @@ namespace BookStore.Application.AuthorOperations.Commands.CreateAuthor
         public string Name { get; set; }
         public string SurName { get; set; }
         public DateTime BirthDate { get; set; }
-        public List<AddBookToAuthorModel>? Books { get; set; }
+       
     }
-    public class AddBookToAuthorModel
-    {
-        public int Id { get; set; }
-        public string Title { get; set; } = "";
-        public int GenreId { get; set; }
-        public int PageCount { get; set; }
-        public DateTime PublishDate { get; set; }
-    }
+ 
 }

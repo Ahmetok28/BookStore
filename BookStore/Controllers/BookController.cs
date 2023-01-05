@@ -70,7 +70,7 @@ namespace BookStore.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateBook(int id, [FromBody] UpdateBookModel updateBook)
         {
-            UpdateBooksCommand command = new UpdateBooksCommand(_context);
+            UpdateBooksCommand command = new UpdateBooksCommand(_context,_mapper);
             command.BookId = id;
             command.Model = updateBook;
             UpdateBooksCommandValidator validator = new UpdateBooksCommandValidator();

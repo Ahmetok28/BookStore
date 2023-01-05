@@ -6,12 +6,12 @@ namespace BookStore.Application.GenreOperations.Queries.GetGenresDetail
 {
     public class GetGenresDetailQuery
     {
-        public readonly BookStoreDbContext _dbContext;
+        public readonly IBookStoreDbContext _dbContext;
 
         public readonly IMapper _mapper;
         public int GenreId { get; set; }
 
-        public GetGenresDetailQuery(IMapper mapper, BookStoreDbContext dbContext)
+        public GetGenresDetailQuery(IMapper mapper, IBookStoreDbContext dbContext)
         {
             _mapper = mapper;
             _dbContext = dbContext;
@@ -33,6 +33,7 @@ namespace BookStore.Application.GenreOperations.Queries.GetGenresDetail
         {
             public int Id { get; set; }
             public string Name { get; set; }
+            public bool IsActive { get; set; } = true;
         }
     }
 }

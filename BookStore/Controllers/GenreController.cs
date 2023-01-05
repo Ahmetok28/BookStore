@@ -44,7 +44,7 @@ namespace BookStore.Controllers
         [HttpPost]
         public IActionResult AddGenre([FromBody] CreateGenreModel newGenre)
         {
-            CreateGenreCommand command = new CreateGenreCommand(_context);
+            CreateGenreCommand command = new CreateGenreCommand(_context,_mapper);
             command.Model = newGenre;
 
             CreateGenreCommandValidator validations = new CreateGenreCommandValidator();
@@ -56,7 +56,7 @@ namespace BookStore.Controllers
         [HttpPut("id")]
         public IActionResult UpdateGenre(int id,[FromBody] UpdateGenreModel updateGenre)
         {
-            UpdateGenreCommand command = new UpdateGenreCommand(_context);
+            UpdateGenreCommand command = new UpdateGenreCommand(_context,_mapper);
             command.GenreId = id;
             command.Model= updateGenre;
 

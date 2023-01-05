@@ -1,4 +1,6 @@
-﻿using BookStore.DBOperations;
+﻿using AutoMapper;
+using BookStore.DBOperations;
+using BookStore.Entities;
 using System;
 
 namespace BookStore.Application.GenreOperations.Commands.UpdateGenre
@@ -7,11 +9,13 @@ namespace BookStore.Application.GenreOperations.Commands.UpdateGenre
     {
         public int GenreId { get; set; }
         public UpdateGenreModel Model { get; set; }
-        private readonly BookStoreDbContext _context;
+        private readonly IBookStoreDbContext _context;
+        private readonly IMapper _mapper;
 
-        public UpdateGenreCommand(BookStoreDbContext context)
+        public UpdateGenreCommand(IBookStoreDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public void Handle()
@@ -21,12 +25,13 @@ namespace BookStore.Application.GenreOperations.Commands.UpdateGenre
             {
                 throw new InvalidOperationException("Kitap Türü Bulunamadı");
             }
-            if (_context.Genres.Any(x => x.Name.ToLower() == Model.Name.ToLower() && x.Id != GenreId))
+            if (_context.Genres.Any(x => x.Name.ToLower() == Model.Name.ToLower() ))
             {
                 throw new InvalidOperationException("Aynı İsimde Bir Kitap Türü Zaten var");
             }
-            genre.Name = string.IsNullOrEmpty(Model.Name.Trim()) ? genre.Name : Model.Name;
-            genre.IsActive = Model.IsActive;
+            _mapper.Map<UpdateGenreModel,Genre>(Model, genre);
+            //genre.Name = string.IsNullOrEmpty(Model.Name.Trim()) ? genre.Name : Model.Name;
+            //genre.IsActive = Model.IsActive;
             _context.SaveChanges();
         }
     }

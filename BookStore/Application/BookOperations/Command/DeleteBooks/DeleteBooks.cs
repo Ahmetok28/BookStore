@@ -4,10 +4,10 @@ namespace BookStore.Application.BookOperations.Command.DeleteBooks
 {
     public class DeleteBooks
     {
-        private readonly BookStoreDbContext _dbContext;
+        private readonly IBookStoreDbContext _dbContext;
         public int BookId;
 
-        public DeleteBooks(BookStoreDbContext dbContext )
+        public DeleteBooks(IBookStoreDbContext dbContext )
         {
             _dbContext = dbContext;
             
@@ -18,13 +18,7 @@ namespace BookStore.Application.BookOperations.Command.DeleteBooks
             
             if (book is null)
                 throw new InvalidOperationException("Silmek İstediğininiz Id'e Sahip Kitap Yok");
-            //if (_dbContext.Authors.SingleOrDefault(x => x.Id == book.Author.Id))
-            //{
-            //    var b = _dbContext.Authors.SingleOrDefault(x => x.Id ==book.Author.Id);
-            //    b.IsPublishing = false;
-            //}
-            //book.Author.IsPublishing = bool.FalseString(book.Author.IsPublishing ? book.Author.IsPublishing : false);
-            //var author = _dbContext.Authors.SingleOrDefault(x => x.)
+            
             _dbContext.Books.Remove(book);
             _dbContext.SaveChanges();
 

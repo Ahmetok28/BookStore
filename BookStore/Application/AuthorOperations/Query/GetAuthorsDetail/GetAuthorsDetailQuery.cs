@@ -5,11 +5,11 @@ namespace BookStore.Application.AuthorOperations.Query.GetAuthorsDetail
 {
     public class GetAuthorsDetailQuery
     {
-        private readonly BookStoreDbContext _context;
+        private readonly IBookStoreDbContext _context;
         private readonly IMapper _mapper;
         public int AuthorId { get; set; }
 
-        public GetAuthorsDetailQuery(BookStoreDbContext context , IMapper mapper )
+        public GetAuthorsDetailQuery(IBookStoreDbContext context , IMapper mapper )
         {
             _context = context;
             _mapper = mapper;

@@ -7,6 +7,7 @@ using BookStore.Entities;
 using static BookStore.Application.AuthorOperations.Query.GetAuthors.GetAuthorQuery;
 using static BookStore.Application.AuthorOperations.Query.GetAuthorsDetail.GetAuthorsDetailQuery;
 using static BookStore.Application.BookOperations.Command.CreateBook.CreateBooksCommand;
+using static BookStore.Application.BookOperations.Command.UpdateBooks.UpdateBooksCommand;
 using static BookStore.Application.BookOperations.Queries.GetBookDetail.GetBookByIdQuery;
 using static BookStore.Application.BookOperations.Queries.GetBooks.GetBooksQuery;
 using static BookStore.Application.GenreOperations.Queries.GetGenres.GetGenresQuery;
@@ -27,7 +28,8 @@ namespace BookStore.Common
             CreateMap<Book, BookViewModel>()
                 .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre.Name))
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(x => (x.Authors.Name + " " + x.Authors.SurName).ToLower()));
-               
+            CreateMap<UpdateBookModel, Book>();
+            CreateMap<Book, UpdateBookModel>();
 
 
             //Genre Mapping
@@ -35,12 +37,12 @@ namespace BookStore.Common
             CreateMap<UpdateGenreModel, Genre>();
             CreateMap<Genre, GenresViewModel>();
             CreateMap<Genre, GenresDetailViewModel>();
-            
+
 
             // Author Mapping
             CreateMap<CreateAuthorModel, Author>();
             CreateMap<UpdateAuthorModel, Author>();
-            CreateMap<Author, AuthorViewModel>() .ForMember(
+            CreateMap<Author, AuthorViewModel>().ForMember(
                     dest => dest.BirthDate,
                     opt => opt.MapFrom(src => src.BirthDate.Date.ToString("dd/MM/yyyy"))
                 );
@@ -50,11 +52,7 @@ namespace BookStore.Common
                 );
 
 
-            // Add bbok to author mapping
 
-            CreateMap<AddBookToAuthorModel, Book>();
-            // Add author to book Mapping
-            CreateMap<AddAuthorToBookModel, Author>();
         }
     }
 }

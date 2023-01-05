@@ -1,4 +1,5 @@
-﻿using BookStore.DBOperations;
+﻿using AutoMapper;
+using BookStore.DBOperations;
 using BookStore.Entities;
 
 namespace BookStore.Application.GenreOperations.Commands.CreateGenre
@@ -6,11 +7,13 @@ namespace BookStore.Application.GenreOperations.Commands.CreateGenre
     public class CreateGenreCommand
     {
         public CreateGenreModel Model { get; set; }
-        private readonly BookStoreDbContext _context;
+        private readonly IBookStoreDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CreateGenreCommand(BookStoreDbContext context)
+        public CreateGenreCommand(IBookStoreDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public void Handle()
@@ -20,8 +23,8 @@ namespace BookStore.Application.GenreOperations.Commands.CreateGenre
             {
                 throw new InvalidOperationException("Kitap türü Zaten Mevcut");
             }
-            genre = new Genre();
-            genre.Name = Model.Name;
+            genre = _mapper.Map<Genre>(Model);
+            
             _context.Genres.Add(genre);
             _context.SaveChanges();
             

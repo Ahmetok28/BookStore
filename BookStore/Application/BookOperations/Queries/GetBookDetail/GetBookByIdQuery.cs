@@ -8,13 +8,14 @@ namespace BookStore.Application.BookOperations.Queries.GetBookDetail
 {
     public class GetBookByIdQuery
     {
-        private readonly BookStoreDbContext _dbContext;
+        private readonly IBookStoreDbContext _dbContext;
         private readonly IMapper _mapper;
+        public BookViewModelById Model { get; set; }
         public int BookId;
 
 
 
-        public GetBookByIdQuery(BookStoreDbContext dbContext, IMapper mapper)
+        public GetBookByIdQuery(IBookStoreDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
            
@@ -26,20 +27,12 @@ namespace BookStore.Application.BookOperations.Queries.GetBookDetail
         public BookViewModelById Handle()
         {
             var book = _dbContext.Books
-                .Include(x=>x.Genre)
-                .Include(x => x.Authors)
-                .Where(book => book.Id == BookId).Single();
+                //.Include(x=>x.Genre)
+                //.Include(x => x.Authors)
+                .Where(book => book.Id == BookId).SingleOrDefault();
             if (book is null)
                 throw new InvalidOperationException("Bu İd' ye Sahip Bir kitap Yok ");
-            BookViewModelById vm = _mapper.Map<BookViewModelById>(book);//new BookViewModelById
-                                                                        //{
-
-            //        Title = book.Title,
-            //        Genre = ((GenreEnum)book.GenreId).ToString(),
-            //        PublishDate = book.PublishDate.Date.ToString("dd/MM/yyyy"),
-            //        PageCount = book.PageCount
-
-            //};
+            BookViewModelById vm = _mapper.Map<BookViewModelById>(book);
             return vm;
         }
 
@@ -50,9 +43,11 @@ namespace BookStore.Application.BookOperations.Queries.GetBookDetail
             public int Id { get; set; }
             public string Title { get; set; }
             public int PageCount { get; set; }
-            public string PublishDate { get; set; }
+            public DateTime PublishDate { get; set; }
             public string Genre { get; set; }
             public string Author { get; set; }
+            public int GenreId { get; set; }
+            public int AuthorId { get; set; }
         }
     }
 }

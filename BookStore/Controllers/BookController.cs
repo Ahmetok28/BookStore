@@ -13,9 +13,11 @@ using BookStore.Application.BookOperations.Command.UpdateBooks;
 using BookStore.Application.BookOperations.Queries.GetBookDetail;
 using BookStore.Application.BookOperations.Queries.GetBooks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookStore.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[Controller]s")]
 

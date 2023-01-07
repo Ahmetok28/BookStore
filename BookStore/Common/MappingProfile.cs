@@ -3,6 +3,7 @@ using BookStore.Application.AuthorOperations.Commands.CreateAuthor;
 using BookStore.Application.AuthorOperations.Commands.UpdateAuthor;
 using BookStore.Application.GenreOperations.Commands.CreateGenre;
 using BookStore.Application.GenreOperations.Commands.UpdateGenre;
+using BookStore.Application.UserOperations.Command.CreateUser;
 using BookStore.Entities;
 using static BookStore.Application.AuthorOperations.Query.GetAuthors.GetAuthorQuery;
 using static BookStore.Application.AuthorOperations.Query.GetAuthorsDetail.GetAuthorsDetailQuery;
@@ -12,6 +13,7 @@ using static BookStore.Application.BookOperations.Queries.GetBookDetail.GetBookB
 using static BookStore.Application.BookOperations.Queries.GetBooks.GetBooksQuery;
 using static BookStore.Application.GenreOperations.Queries.GetGenres.GetGenresQuery;
 using static BookStore.Application.GenreOperations.Queries.GetGenresDetail.GetGenresDetailQuery;
+using static BookStore.Application.UserOperations.Command.CreateUser.CreateUserCommand;
 
 namespace BookStore.Common
 {
@@ -51,6 +53,10 @@ namespace BookStore.Common
                     opt => opt.MapFrom(src => src.BirthDate.Date.ToString("dd/MM/yyyy"))
                 );
 
+            //User Mapping
+            CreateMap<CreateUserModel, User>();
+           // CreateMap<UpdateUserModel, Genre>();
+           
 
 
         }

@@ -7,10 +7,12 @@ using BookStore.Application.GenreOperations.Queries.GetGenres;
 using BookStore.Application.GenreOperations.Queries.GetGenresDetail;
 using BookStore.DBOperations;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]s")]
     public class GenreController : ControllerBase
